@@ -1,23 +1,90 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# Dependencies
+node_modules/
+.pnp
 .pnp.js
 
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# Environment Variables
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Build directories
+build/
+dist/
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Temporary folders
+tmp/
+temp/
+
+# Next.js build output
+.next/
+
+# Gatsby files
+.cache/
+public/
+
+# Storybook
+storybook-static/
+
+# Miscellaneous
+.sass-cache/
+connect.lock
+coverage/
+lib-cov/
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules/
+bower_components/
+.lock-wscript
+build/Release
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# TypeScript
+*.tsbuildinfo
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+
+# Linux system files
+*.swp
+
+# Parcel cache
+.cache
+
+# Next.js cache
+.next
+out

@@ -1,10 +1,12 @@
-import logo from './logo.svg';
+// src/App.js
+import React from 'react';
 import './App.css';
+import AppRoutes from './routes';
 
 function App() {
   return (
     <div className="App">
-      Um app de tarefas muito legal
+      <AppRoutes />
     </div>
   );
 }
