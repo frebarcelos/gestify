@@ -2,31 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import CardTask from '../components/atom/cardTask';
+import TaskList from '../components/molecules/TaskList';
+import tasksData from '../data/taskexemples.json';
+import ICardTask from '../interfaces/ICardTask';
 
 const Home = () => {
-  const [data, setData] = useState([]);
+const [tasks, setTasks] = useState<ICardTask[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get('/tasks');
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data', error);
-      }
-    };
+    useEffect(() => {
+      setTasks(tasksData);
+    }, []);
 
-    fetchData();
-  }, []);
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the home page!</p>
-      <CardTask color="btn-secondary"   />
-      <ul>
-      
-      </ul>
+    <div className='mt-5'>      
+      <TaskList tasks={tasks}  title="Um titulo legal" />      
     </div>
   );
 };

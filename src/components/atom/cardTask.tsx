@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Toast from 'react-bootstrap/Toast';
-
-interface CardTaskProps {
-    color: string;
-    title?: string;
-    message?: string;
-  }
+import ICardTask from '../../interfaces/ICardTask';
 
 
-const CardTask: React.FC<CardTaskProps> = ({ color, title, message }) => {
+
+const CardTask: React.FC<ICardTask> = ({ color, title, message, data }) => {
   const [showA, setShowA] = useState(true);
 
   const toggleShowA = () => setShowA(!showA);  
 
   return (
    <>
-        <Button onClick={toggleShowA} className={`mb-2 ${color}`} >
-          Toggle Toast <strong>with</strong> Animation
+        <Button onClick={toggleShowA} className={`mb-2 ${color} w-100`}  >
+          {title}
         </Button>
         <Toast show={showA} onClose={toggleShowA}>
           <Toast.Header>
@@ -27,9 +23,9 @@ const CardTask: React.FC<CardTaskProps> = ({ color, title, message }) => {
               alt=""
             />
             <strong className="me-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
+            <small>{data}</small>
           </Toast.Header>
-          <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+          <Toast.Body>{message}</Toast.Body>
           </Toast>
     </>
       
