@@ -1,6 +1,7 @@
 // src/pages/Home.js
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import CardTask from '../components/atom/cardTask';
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -22,10 +23,9 @@ const Home = () => {
     <div>
       <h1>Home Page</h1>
       <p>Welcome to the home page!</p>
+      <CardTask color="btn-secondary"   />
       <ul>
-        {data.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
+      
       </ul>
     </div>
   );
