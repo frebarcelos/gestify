@@ -1,13 +1,12 @@
 // src/pages/Home.js
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import CardTask from '../components/atom/cardTask';
 import TaskList from '../components/molecules/TaskList';
 import tasksData from '../data/taskexemples.json';
-import ICardTask from '../interfaces/ICardTask';
+import Task from '../interfaces/ICardTask';
 
 const Home = () => {
-const [tasks, setTasks] = useState<ICardTask[]>([]);
+const [tasks, setTasks] = useState<Task[]>([]);
 
     useEffect(() => {
       setTasks(tasksData);

@@ -10,9 +10,8 @@ const NavBar: React.FC = () => {
       <Container>
       <Navbar.Brand href="#home">
             <img
-              src="/logo192.png"
-              width="30"
-              height="30"
+              src="/logoHorizontal.svg"
+              width="150"              
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
@@ -20,8 +19,7 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
           <Nav >
-            <Nav.Link href="/">Pagina inicial</Nav.Link>
-            <Nav.Link href="/Login">Login</Nav.Link>            
+            <Nav.Link href="/">Pagina inicial</Nav.Link>                    
           </Nav>
         </Navbar.Collapse>
       </Container>

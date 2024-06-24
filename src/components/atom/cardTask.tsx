@@ -5,14 +5,14 @@ import ICardTask from '../../interfaces/ICardTask';
 
 
 
-const CardTask: React.FC<ICardTask> = ({ color, title, message, data }) => {
+const CardTask: React.FC<ICardTask> = ({title, description, creationDate }) => {
   const [showA, setShowA] = useState(true);
 
   const toggleShowA = () => setShowA(!showA);  
 
   return (
    <>
-        <Button onClick={toggleShowA} className={`mb-2 ${color} w-100`}  >
+        <Button onClick={toggleShowA} className={`mb-2  w-100`}  >
           {title}
         </Button>
         <Toast show={showA} onClose={toggleShowA}>
@@ -23,9 +23,9 @@ const CardTask: React.FC<ICardTask> = ({ color, title, message, data }) => {
               alt=""
             />
             <strong className="me-auto">Bootstrap</strong>
-            <small>{data}</small>
+            <small>{creationDate}</small>
           </Toast.Header>
-          <Toast.Body>{message}</Toast.Body>
+          <Toast.Body>{description}</Toast.Body>
           </Toast>
     </>
       

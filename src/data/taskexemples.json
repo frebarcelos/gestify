@@ -1,21 +1,50 @@
 [
-    {
-      "title": "Task 1",
-      "color": "btn-primary",
-      "data": "2024-06-20",
-      "message": "This is the first task."
+  {
+    "id": 0,
+    "title": "string",
+    "description": "string",
+    "creationDate": "2024-06-20T17:26:48.657Z",
+    "completionDate": "2024-06-20T17:26:48.657Z",
+    "statusID": 0,
+    "status": {
+      "id": 0,
+      "statusName": "string"
     },
-    {
-      "title": "Task 2",
-      "color": "btn-success",
-      "data": "2024-06-21",
-      "message": "This is the second task."
+    "priorityID": 0,
+    "priority": {
+      "id": 0,
+      "priorityName": "string"
     },
-    {
-      "title": "Task 3 com titulo longo",
-      "color": "btn-danger",
-      "data": "2024-06-22",
-      "message": "This is the third task."
-    }
-  ]
-  
+    "userID": 0,
+    "user": {
+      "id": 0,
+      "username": "string",
+      "passwordHash": "string"
+    },
+    "categoryID": 0,
+    "category": {
+      "id": 0,
+      "categoryName": "string",
+      "userID": 0,
+      "user": {
+        "id": 0,
+        "username": "string",
+        "passwordHash": "string"
+      }
+    },
+    "taskTags": [
+      {
+        "taskID": 0,
+        "task": "string",
+        "tagID": 0,
+        "tag": {
+          "id": 0,
+          "tagName": "string",
+          "taskTags": [
+            "string"
+          ]
+        }
+      }
+    ]
+  }
+]
