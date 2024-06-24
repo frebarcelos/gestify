@@ -10,7 +10,7 @@ const CreateUser: React.FC = () => {
     event.preventDefault();
     try {
       const systemToken = await getSystemToken();
-      const response = await axios.post('/users', { username, password }, {
+      const response = await axios.post('/auth/register', { username, password }, {
         headers: { Authorization: `Bearer ${systemToken}` }
       });
       console.log('User created', response.data);
