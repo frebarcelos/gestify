@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import axios from '../axiosConfig';
 import { getSystemToken } from '../utils/systemAuth';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUser: React.FC = () => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [passwordHash, setPasswordHash] = useState('');
+  const navigate = useNavigate();
 
   const handleCreateUser = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       const systemToken = await getSystemToken();
-      const response = await axios.post('/auth/register', { username, password }, {
+      const response = await axios.post('/auth/register', { username, passwordHash }, {
         headers: { Authorization: `Bearer ${systemToken}` }
       });
-      console.log('User created', response.data);
-      // Remove o JWT do sistema (não necessário se o token expira automaticamente)
+      alert("Usuario criado com sucesso");
+      navigate('/login');     
     } catch (error) {
       console.error('Error creating user', error);
     }
@@ -30,7 +32,7 @@ const CreateUser: React.FC = () => {
         </div>
         <div className="mb-3">
           <label className="form-label">Senha</label>
-          <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)} />
+          <input type="password" className="form-control" value={passwordHash} onChange={e => setPasswordHash(e.target.value)} />
         </div>
         <h6>Já tem Login? <a href='/login'>fazer Login</a></h6>
         <button type="submit" className="btn btn-primary">Criar</button>
