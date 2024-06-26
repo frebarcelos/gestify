@@ -15,10 +15,14 @@ const CreateUser: React.FC = () => {
       const response = await axios.post('/auth/register', { username, passwordHash }, {
         headers: { Authorization: `Bearer ${systemToken}` }
       });
-      alert("Usuario criado com sucesso");
-      navigate('/login');     
-    } catch (error) {
-      console.error('Error creating user', error);
+      alert("Usuário criado com sucesso");
+      navigate('/login');
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        alert('Erro ao criar usuário: ' + error.response.data);
+      } else {
+        alert('Erro ao criar usuário: ' + error.message);
+      }
     }
   };
 
@@ -27,16 +31,15 @@ const CreateUser: React.FC = () => {
       <h2>Criar Usuário</h2>
       <form onSubmit={handleCreateUser}>
         <div className="mb-3">
-          <label className="form-label">login</label>
+          <label className="form-label">Login</label>
           <input type="text" className="form-control" value={username} onChange={e => setUsername(e.target.value)} />
         </div>
         <div className="mb-3">
           <label className="form-label">Senha</label>
           <input type="password" className="form-control" value={passwordHash} onChange={e => setPasswordHash(e.target.value)} />
         </div>
-        <h6>Já tem Login? <a href='/login'>fazer Login</a></h6>
+        <h6>Já tem Login? <a href='/login'>Fazer Login</a></h6>
         <button type="submit" className="btn btn-primary">Criar</button>
-        
       </form>
     </div>
   );

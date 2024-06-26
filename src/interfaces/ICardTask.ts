@@ -14,12 +14,13 @@ interface Priority {
     priorityName: string;
 }
 
-interface Category {
+export interface ICategory {
     id: number;
     categoryName: string;
     userID: number;
     user: User;
 }
+
 
 interface Tag {
     id: number;
@@ -34,7 +35,7 @@ interface TaskTag {
     tag: Tag;
 }
 
-interface Task {
+export interface ITask {
     id?: number;
     title?: string;
     description?: string;
@@ -47,7 +48,7 @@ interface Task {
     userID?: number;
     user?: User;
     categoryID?: number;
-    category?: Category;
+    category?: ICategory;
     taskTags?: TaskTag[];
 }
-export default Task;
+;

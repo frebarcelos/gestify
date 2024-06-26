@@ -1,30 +1,56 @@
-// src/pages/Home.js
 import React, { useState, useEffect } from 'react';
-import api from '../services/api';
 import TaskList from '../components/molecules/TaskList';
-import tasksData from '../data/taskexemples.json';
-import Task from '../interfaces/ICardTask';
+import { ITask, ICategory } from '../interfaces/ICardTask';
 import NavBar from '../components/atom/navbar';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
+import axios from '../axiosConfig';
+import './styles.css';
 
 const Home = () => {
-const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [categorias, setCategorias] = useState<ICategory[]>([]);
+  const [modalShow, setModalShow] = useState(false);
 
-    useEffect(() => {
-      setTasks(tasksData);
-    }, []);
+  useEffect(() => {
+    async function fetchTasks() {
+      try {
+        const response = await axios.get('/Tasks/UserTasks');
+        setTasks(response.data); 
+      } catch (error) {
+        console.error('Erro ao buscar tarefas:', error);        
+        setTasks([]); 
+      }
+    }
+    async function fetchCategorias() {
+        try {
+          const response = await axios.get('/Categories');
+          setCategorias(response.data); 
+        } catch (error) {
+          console.error('Erro ao buscar Categorias:', error);        
+          setCategorias([]); 
+        }
+      }
+    fetchCategorias()
+    fetchTasks();
+  }, []);
 
-
-    return (
-      <>
+  return (
+    <>
       <NavBar />
       <div className='mt-5'>
-      <Container>      
-        <TaskList tasks={tasks}  title="Um titulo legal" />
-      </Container>      
-    </div>
-      </>
-    
+        <Container>
+        <div className='flexboxhome'>            
+        
+          {categorias.map((categoria, index) => (              
+              <TaskList tasks={tasks} title={categoria.categoryName} />
+          ))}
+                  
+         <Button variant="primary botaoNovaCategoria" onClick={() => setModalShow(true)}>Criar Nova Categoria </Button>
+         </div>
+          
+        </Container>
+      </div>
+    </>
   );
 };
 
