@@ -135,7 +135,7 @@ const MyVerticallyCenteredModal: React.FC<ModalProps> = ({ onHide, show, card })
                         </Form.Group>
                         <Form.Group className="mb-3">
                         <Form.Label>Categoria</Form.Label>
-                            <Form.Select size="lg" name="statusID" value={card.categoryID} onChange={(e) => setCategoria(parseInt(e.target.value))}>
+                            <Form.Select size="lg" name="statusID" value={categoria} onChange={(e) => setCategoria(parseInt(e.target.value))}>
                             <option value=''></option>
                             {categorias.map((categoria, index) => (              
                                 <option value={categoria.id}>{categoria.categoryName}</option>
