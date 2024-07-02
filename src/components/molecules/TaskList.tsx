@@ -1,41 +1,68 @@
 import React, { useState } from 'react';
 import axios from '../../axiosConfig';
-import {ITask} from '../../interfaces/ICardTask';
+import {ITask, Status} from '../../interfaces/ICardTask';
 import CardTask from '../atom/cardTask';
 import { Button, Modal, Form, Card } from 'react-bootstrap';
-import {convertDateToISO} from '../../services/utils';
+import { convertDateToISO } from '../../services/utils';
+import './styles.css';
 
 
 
 interface ITaskList {
     title: string;
     tasks: ITask[];
+    categoria?: number;
+    origem: string;
 }
 
-const TaskList: React.FC<ITaskList> = ({ tasks, title }) => { 
+const TaskList: React.FC<ITaskList> = ({ tasks, title, categoria, origem }) => { 
     const [modalShow, setModalShow] = useState(false);
+    let tarefas: ITask[] = []
+    tasks.map((task, index) => {
+        if (!task.categoryID && origem == "home") {
+            tarefas.push(task);
+        }
+    })
     
-    return (
-      <Card className='w-25 bg-light text-dark'>
+    if (origem == "home" && tarefas.length > 0) {
+        return (<Card className='w-25 bg-light text-dark cardTarefas'>
         <Card.Header><strong>{title}</strong></Card.Header>
         <Card.Body>
-          {tasks.map((task, index) => (
-            <CardTask key={index} task={task} />
-          ))}
+          {tarefas.map((task, index) => {
+              if (task.categoryID == categoria  ) {
+                return <CardTask key={index} task={task} />
+            } 
+          }            
+          )}          
+        </Card.Body>
+      </Card>)
+    } else if (origem == "categoria") {
+    return (
+      <Card className='w-25 bg-light text-dark cardTarefas'>
+        <Card.Header><strong>{title}</strong></Card.Header>
+        <Card.Body>
+          {tasks.map((task, index) => {
+              if (task.categoryID == categoria  ) {
+                return <CardTask key={index} task={task} />
+            } 
+          }            
+          )}
           <Button variant="primary" onClick={() => setModalShow(true)}>Criar Nova Tarefa</Button>
           <MyVerticallyCenteredModal
             show={modalShow}
             onHide={() => setModalShow(false)}
+            categoria={categoria}
           />
         </Card.Body>
       </Card>
-    );
+        );
+    }
 }
 
 export default TaskList;
 
 function MyVerticallyCenteredModal(props: any) {
-    const [task, setTask] = useState<ITask>({});
+    const [task, setTask] = useState<ITask>({});    
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTask({ ...task, [event.target.name]: event.target.value });
@@ -45,9 +72,11 @@ function MyVerticallyCenteredModal(props: any) {
         try {
             task.creationDate = convertDateToISO(task.creationDate);
             task.completionDate = convertDateToISO(task.completionDate);
+            task.statusID = 1;
+            task.categoryID = props.categoria;
             await axios.post('/Tasks', task);
             alert('Tarefa criada com sucesso!');
-            props.onHide();
+            props.onHide(); 
             window.location.reload()
         } catch (error) {
             console.error('Erro ao criar tarefa:', error);
