@@ -1,3 +1,14 @@
 .cardTarefas {
     margin-right: 30px;
 }
+.botao {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.titulo {
+    display: flex;
+    flex-direction: column;
+}
+.botoes {
+    display: flex;
+}

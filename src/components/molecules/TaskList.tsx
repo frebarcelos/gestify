@@ -17,19 +17,58 @@ interface ITaskList {
 
 const TaskList: React.FC<ITaskList> = ({ tasks, title, categoria, origem }) => { 
     const [modalShow, setModalShow] = useState(false);
+    const [editar, setEditar] = useState(false);
+    const [categoriaID, setCategoriaID] = useState<ICategoria>({ID: categoria, categoryName: title}); 
+    const [titulo, setTitulo] = useState<string>(title)
+    
     let tarefas: ITask[] = []
+    let tarefasCategoria: ITask[] = []
+    
     tasks.map((task, index) => {
         if (!task.categoryID && origem == "home") {
             tarefas.push(task);
         }
     })
+    function editando() {
+        setEditar(true)
+        setTitulo(title)
+    }
+    const handleDelete = async () => {
+        if (tarefasCategoria.length > 0) {
+            return alert("Categoria não pode ser excluida, pois existem tarefas nela")
+        }
+        if (categoria) {
+            try {
+                await axios.delete(`/Categories/${categoria}`);
+                alert('Categoria excluída com sucesso!');                
+                window.location.reload()
+            } catch (error) {
+                console.error('Erro ao excluir Categoria:', error);
+                alert('Erro ao excluir Categoria.');
+            }
+        }
+    };
+    const handleSubmit = async () => {
+        if (categoriaID) {
+            try {
+                categoriaID.categoryName = titulo;
+                categoriaID.ID = categoria;
+                await axios.put(`/Categories/${categoria}`, categoriaID);
+                alert('Categoria atualizada com sucesso!');                
+                window.location.reload()
+            } catch (error) {
+                console.error('Erro ao atualizar Categoria:', error);
+                alert('Erro ao atualizar Categoria.');
+            }
+        }
+    };
     
     if (origem == "home" && tarefas.length > 0) {
         return (<Card className='w-25 bg-light text-dark cardTarefas'>
         <Card.Header><strong>{title}</strong></Card.Header>
         <Card.Body>
           {tarefas.map((task, index) => {
-              if (task.categoryID == categoria  ) {
+              if (task.categoryID == categoria) {                
                 return <CardTask key={index} task={task} />
             } 
           }            
@@ -39,10 +78,13 @@ const TaskList: React.FC<ITaskList> = ({ tasks, title, categoria, origem }) => {
     } else if (origem == "categoria") {
     return (
       <Card className='w-25 bg-light text-dark cardTarefas'>
-        <Card.Header><strong>{title}</strong></Card.Header>
+            <Card.Header className='titulo'>
+                {editar ? <><Form> <Form.Control type="text" placeholder="Nome da Categoria" name="categoryName" onChange={(e) => setTitulo(e.target.value)} value={titulo} /></Form> <div className='botoes'><Button onClick={() => setEditar(false)} variant="danger" className='botao'>Canceler</Button><Button onClick={handleSubmit} variant="primary" className='botao'>salvar</Button></div></> : (<><strong>{title}</strong><div className='botoes'> <Button onClick={handleDelete} variant="danger" className='botao'>Deletar</Button><Button onClick={() => editando()} variant="primary" className='botao'>Editar</Button></div></>)}
+            </Card.Header>
         <Card.Body>
           {tasks.map((task, index) => {
-              if (task.categoryID == categoria  ) {
+              if (task.categoryID == categoria) {
+                tarefasCategoria.push(task)
                 return <CardTask key={index} task={task} />
             } 
           }            
@@ -53,6 +95,7 @@ const TaskList: React.FC<ITaskList> = ({ tasks, title, categoria, origem }) => {
             onHide={() => setModalShow(false)}
             categoria={categoria}
           />
+          
         </Card.Body>
       </Card>
         );
@@ -118,3 +161,11 @@ function MyVerticallyCenteredModal(props: any) {
       </Modal>
     );
 }
+
+interface ICategoria {
+    ID?: number,
+    categoryName?: string
+}
+
+
+
